@@ -38,14 +38,178 @@ Full Subtractor:
 ![image](https://github.com/navaneethans/VLSI-LAB-EXPERIMENTS/assets/6987778/7385a408-40a5-4203-8050-b72818622d79)
 
 
-
+# HALF ADDER
 VERILOG CODE:
+~~~
+module half_adder(Sum,carry,a,b);
+input a,b;
+output Sum,carry;
+assign Sum = a ^ b;
+assign carry = a & b;
+endmodule
+~~~
 
-----Type Verilog Code
+
 
 OUTPUT:
 
------Place a Waveform Generated from Xilinx ISE
+<img width="745" alt="2024-03-15 (3)" src="https://github.com/navaneethans/VLSI-LAB-EXP-1/assets/146088220/9542a0c4-25d7-46a2-ac36-ee98da0a1f52">
+<img width="962" alt="2024-04-06" src="https://github.com/navaneethans/VLSI-LAB-EXP-1/assets/146088220/e719aa95-bc5b-45f0-aa0e-bc09c9563de8">
+
+# HALF SUBTRACTOR
+
+VERILOG CODE
+~~~
+module half_sub(Diff,Borrow,a,b);
+input a,b;
+output Diff,Borrow;
+wire w1;
+not(w1,a);
+xor(Diff,a,b);
+and(Borrow,b,w1);
+endmodule
+~~~
+
+OUTPUT:
+
+<img width="826" alt="2024-04-07" src="https://github.com/navaneethans/VLSI-LAB-EXP-1/assets/146088220/ffb7b562-c956-4174-9599-d191ec0eaa51">
+<img width="962" alt="2024-03-04 (3)" src="https://github.com/navaneethans/VLSI-LAB-EXP-1/assets/146088220/bfda55ff-4173-4263-99f4-cf663c018339">
+
+# FULL ADDER
+VERILOG CODE:
+~~~
+module fulladder(sum,cout,a,b,c);
+input a,b,c;
+output sum,cout;
+wire w1,w2,w3,w4,w5;
+xor x1(w1,a,b);
+xor x2(sum,w1,c);
+and a1(w2,a,b);
+and a2(w3,b,c);
+and a3(w4,a,c);
+or o1(w5,c1,c2);
+or o2(cout,w5,c3);
+endmodule
+~~~
+OUTPUT:
+
+<img width="962" alt="2024-04-01" src="https://github.com/navaneethans/VLSI-LAB-EXP-1/assets/146088220/f6de3f54-f712-455b-b584-2b2be4be5a43">
+<img width="962" alt="2024-04-06 (1)" src="https://github.com/navaneethans/VLSI-LAB-EXP-1/assets/146088220/4f24d9d5-764b-42ce-8107-e9ddab34ce01">
+
+# FULL SUBTRACTOR
+
+VERILOG CODE:
+~~~
+module full_sub(borrow,diff,a,b,c);
+output borrow,diff;
+input a,b,c;
+wire w1,w4,w5,w6;
+xor (diff,a,b,c);
+not n1(w1,a);
+and a1(w4,w1,b);
+and a2(w5,w1,c);
+and a3(w6,b,c);
+or o1(borrow,w4,w5,w6);
+endmodule
+~~~
+
+OUTPUT:
+
+<img width="692" alt="2024-04-02 " src="https://github.com/navaneethans/VLSI-LAB-EXP-1/assets/146088220/388542ee-1529-4982-8895-3e462a9fbc28">
+<img width="962" alt="2024-04-06 (3)" src="https://github.com/navaneethans/VLSI-LAB-EXP-1/assets/146088220/233905eb-eb96-4503-8010-0a8f62a39f62">
+
+# LOGIC GATES
+
+VERILOG CODE:
+~~~
+module logicgates(a,b,andgate,orgate,xorgate,nandgate,norgate,xnorgate,notgate);
+input a,b;
+output andgate,orgate,xorgate,nandgate,norgate,xnorgate,notgate;
+and(andgate,a,b);
+or(orgate,a,b);
+xor(xorgate,a,b);
+nand(nandgate,a,b);  
+nor(norgate,a,b);
+xnor(xnorgate,a,b);
+not(notgate,a);
+endmodule
+~~~
+
+OUTPUT:
+
+<img width="962" alt="2024-03-04" src="https://github.com/navaneethans/VLSI-LAB-EXP-1/assets/146088220/55650786-f1ed-4df0-8a22-75f036e28142">
+<img width="962" alt="2024-04-06 (4)" src="https://github.com/navaneethans/VLSI-LAB-EXP-1/assets/146088220/ee3a630b-cd62-4e48-9477-5e52e77ea099">
+
+# 4 BIT RIPPLE CARRY ADDER
+
+VERILOG CODE:
+~~~
+module rippe_adder(S, Cout, X, Y,Cin);
+input [3:0] X, Y;
+input Cin;
+output [3:0] S;
+output Cout;
+wire w1, w2, w3;
+fulladder u1(S[0], w1,X[0], Y[0], Cin);
+fulladder u2(S[1], w2,X[1], Y[1], w1);
+fulladder u3(S[2], w3,X[2], Y[2], w2);
+fulladder u4(S[3], Cout, X[3], Y[3], w3);
+endmodule
+
+module fulladder(S, Co, X, Y, Ci);
+input X, Y, Ci;
+output S, Co;
+wire w1,w2,w3;
+xor G1(w1, X, Y);
+xor G2(S, w1, Ci);
+and G3(w2, w1, Ci);
+and G4(w3, X, Y);
+or G5(Co, w2, w3);
+endmodule
+~~~
+
+OUTPUT:
+<img width="953" alt="2024-04-03" src="https://github.com/navaneethans/VLSI-LAB-EXP-1/assets/146088220/fb1aed98-0f38-49f9-bf23-11eee9de8ff7">
+<img width="962" alt="2024-04-06 (5)" src="https://github.com/navaneethans/VLSI-LAB-EXP-1/assets/146088220/f96c2ec5-11a2-40cf-a29d-0eca80eabeb6">
+
+# 8 BIT RIPPLE CARRY ADDER
+VERILOG CODE:
+~~~
+module rippe_adder(S, Cout, X, Y,Cin);
+input [7:0] X, Y;// Two 4-bit inputs
+input Cin;
+output [7:0] S;
+output Cout;
+wire w1, w2, w3, w4, w5, w6, w7;
+ // instantiating 8 1-bit full adders in Verilog
+fulladder u1(S[0], w1,X[0], Y[0], Cin);
+fulladder u2(S[1], w2,X[1], Y[1], w1);
+fulladder u3(S[2], w3,X[2], Y[2], w2);
+fulladder u4(S[3], w4,X[3], Y[3], w3);
+fulladder u5(S[4], w5,X[4], Y[4], w4);
+fulladder u6(S[5], w6,X[5], Y[5], w5);
+fulladder u7(S[6], w7,X[6], Y[6], w6);
+fulladder u8(S[7], Cout,X[7], Y[7], w7);
+endmodule
+module fulladder(S, Co, X, Y, Ci);
+input X, Y, Ci;
+output S, Co;
+wire w1,w2,w3;
+  //Structural code for one bit full adder
+xor G1(w1, X, Y);
+xor G2(S, w1, Ci);
+and G3(w2, w1, Ci);
+and G4(w3, X, Y);
+or G5(Co, w2, w3);
+endmodule
+~~~
+
+OUTPUT:
+<img width="591" alt="2024-04-06 (7)" src="https://github.com/navaneethans/VLSI-LAB-EXP-1/assets/146088220/edd043d3-cba2-4499-b5ca-6f0b389eccc8">
+<img width="962" alt="2024-04-06 (6)" src="https://github.com/navaneethans/VLSI-LAB-EXP-1/assets/146088220/62a1acd4-95bc-4d63-afa5-f6363a731b35">
+
 
 RESULT:
+
+thus the simulation of logic gates,adders,subtractors was done and output verified successfully.
 
